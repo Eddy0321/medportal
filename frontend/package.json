@@ -1,0 +1,30 @@
+{
+  "name": "art-reproductive-payment-page-recovered",
+  "private": true,
+  "version": "0.1.0-recovered",
+  "dependencies": {
+    "@mui/material": "^5.15.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "country-state-city": "^3.2.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.0",
+    "styled-components": "^6.1.0"
+  },
+  "proxy": "http://localhost:3000",
+  "devServer": { "allowedHosts": [""] },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "server": "node server/index.js",
+    "start:server": "npm run build && npm run server"
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+  }
+}
