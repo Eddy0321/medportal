@@ -78,7 +78,7 @@ async function verifyTurnstile(token, remoteIp) {
 app.post('/api/charges', async (req, res) => {
   try {
     console.log('here')
-    const { turnstileToken } = req.body;
+    const { turnstileToken, ...payload } = req.body;
 
     // Verify Turnstile
     const turnstileResult = await verifyTurnstile(
@@ -100,8 +100,8 @@ app.post('/api/charges', async (req, res) => {
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxODQyMyIsImp0aSI6ImZlMDU0ZDcyOWUzNzIyNGM4NzBlY2NhMTE1ZWQ0ZDM2Yzg1NGM5NjNiZDVhMjY4YjczYzk1OTMwODkxY2JiY2I1NGQzNzYxMGUyYWM5ZTBiIiwiaWF0IjoxNzIyNjI1NDc3LCJuYmYiOjE3MjI2MjU0NzcsImV4cCI6MTg4MDMwNTQ3Nywic3ViIjoiMzkyOTMiLCJzY29wZXMiOiIqIn0.V45p8IHE5SUyJoawaGLn0H2nTkkfSXGShN_NC1iZWo8xWdmZ-BaX7YKOT4rMs-3zVH_zjRFso2Pv1VTYaesysziFgiFeWpRZudITaoWmvtZuAl8SbwCJMsEw97Uat70nrgmNTLjMyeoFOwpugwdTeg4nLGA3CAgz1VoadmWKU_Y0T2WuX56gkcHrsFeNqqvvpTltlOSe71KKBwQJGPJGlKZLokrNMifPv7gxBSn-TxJu-gY4w2Xv6nsEm5UYqva8SSdzy6Wn_FeiUDJrZ0qfSvATqHQL-x_w-4w6aumbcXhhkAnchxP7ouXeiBHwQgaAo-PB6jHNV65tVG_uWMugocn_QRoGd3SLLiTG9lbV5EbZpSHAxrqmo_y0QjhzUQ28gz1Wg6HpZEDWfWpYAx6xVwe-bBOL_UxvXeZYWUg6XiAi2ZqXCvRxQrV8X25nGnBytgqw1vvPFguxABZyHG7H02sgzS24Xnxvste0hy1vPykFAwmG1IoE9veIyzfyK6pAcLTJLmy2gZLDhxlRZCmRCnwnZoShGPHnIXk06lXOGfzhQkZORwLUKeU2mNLlUyOc-gf90qITI3pTW1iyZC51zFxK3thzj9xKJMPbFgkQhdEJwztU9--yZO_t1wS36oNPgxDd73AwBE8pAg4BQpLoZMTlflYVkgQgLBh0Bdk8Xtw'
     };
     
-    const formBody = Object.keys(req.body)
-      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(req.body[key]))
+    const formBody = Object.keys(payload)
+      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(payload[key]))
       .join('&');
 
     // Call your external API
@@ -151,7 +151,7 @@ app.post('/api/charges', async (req, res) => {
 app.post('/api/tokens', async (req, res) => {
   try {
     console.log('started')
-    const { turnstileToken } = req.body;
+    const { turnstileToken, ...payload } = req.body;
 
     // Verify Turnstile
     const turnstileResult = await verifyTurnstile(
@@ -167,14 +167,15 @@ app.post('/api/tokens', async (req, res) => {
       });
     }
 
+
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxODQyMyIsImp0aSI6ImZlMDU0ZDcyOWUzNzIyNGM4NzBlY2NhMTE1ZWQ0ZDM2Yzg1NGM5NjNiZDVhMjY4YjczYzk1OTMwODkxY2JiY2I1NGQzNzYxMGUyYWM5ZTBiIiwiaWF0IjoxNzIyNjI1NDc3LCJuYmYiOjE3MjI2MjU0NzcsImV4cCI6MTg4MDMwNTQ3Nywic3ViIjoiMzkyOTMiLCJzY29wZXMiOiIqIn0.V45p8IHE5SUyJoawaGLn0H2nTkkfSXGShN_NC1iZWo8xWdmZ-BaX7YKOT4rMs-3zVH_zjRFso2Pv1VTYaesysziFgiFeWpRZudITaoWmvtZuAl8SbwCJMsEw97Uat70nrgmNTLjMyeoFOwpugwdTeg4nLGA3CAgz1VoadmWKU_Y0T2WuX56gkcHrsFeNqqvvpTltlOSe71KKBwQJGPJGlKZLokrNMifPv7gxBSn-TxJu-gY4w2Xv6nsEm5UYqva8SSdzy6Wn_FeiUDJrZ0qfSvATqHQL-x_w-4w6aumbcXhhkAnchxP7ouXeiBHwQgaAo-PB6jHNV65tVG_uWMugocn_QRoGd3SLLiTG9lbV5EbZpSHAxrqmo_y0QjhzUQ28gz1Wg6HpZEDWfWpYAx6xVwe-bBOL_UxvXeZYWUg6XiAi2ZqXCvRxQrV8X25nGnBytgqw1vvPFguxABZyHG7H02sgzS24Xnxvste0hy1vPykFAwmG1IoE9veIyzfyK6pAcLTJLmy2gZLDhxlRZCmRCnwnZoShGPHnIXk06lXOGfzhQkZORwLUKeU2mNLlUyOc-gf90qITI3pTW1iyZC51zFxK3thzj9xKJMPbFgkQhdEJwztU9--yZO_t1wS36oNPgxDd73AwBE8pAg4BQpLoZMTlflYVkgQgLBh0Bdk8Xtw'
     };
 
-    const formBody = Object.keys(req.body)
-      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(req.body[key]))
+    const formBody = Object.keys(payload)
+      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(payload[key]))
       .join('&');
 
     // Call your external API
